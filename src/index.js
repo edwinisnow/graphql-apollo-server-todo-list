@@ -27,11 +27,24 @@ const typeDefs = gql`
     type Query {
         todos:[Todo]
     }
+
+    type Mutation {
+        todoAdd:Todo
+    }
 `
 
 const resolvers = {
     Query: {
         todos: () => todoData,
+    },
+    Mutation: {
+        todoAdd: () => (
+            {
+                id: 3,
+                title: 'Meeting with boss',
+                completed: false
+            }
+        )
     }
 }
 
