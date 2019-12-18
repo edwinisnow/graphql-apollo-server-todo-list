@@ -1,5 +1,28 @@
 const { ApolloServer, gql } = require('apollo-server')
 
+var Sequelize = require('sequelize');
+var connection = new Sequelize('demo_schema', 'root', '', {
+    host: 'localhost',
+    dialect: 'mariadb',
+    dialectOptions: { connectTimeout: 1000 }
+});
+
+var TodoTable = connection.define('todo', {
+    title: Sequelize.STRING,
+    completed: Sequelize.BOOLEAN,
+})
+
+connection.sync().then(function () {
+    // TodoTable.create({
+    //     title: 'Take out the trash',
+    //     completed: false
+    // })
+
+    TodoTable.findByPk(3).then(function (article) {
+        console.log("Log: -----> : article", article.dataValues)
+    })
+});
+
 const todoData = [
     {
         id: 1,
